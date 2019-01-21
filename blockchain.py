@@ -132,24 +132,21 @@ def verify_blockchain():
             return False
     return True
 
-             
 
+# allows you to check anytime if open transactions are valid
 
-    # is_valid = True
-    # for block_index in range(len(blockchain)):
-
-    #     print('blockindex: ' + str(blockchain[block_index][0]))
-    #     print('Blockchain: '+ str(blockchain))
-    #     print('block index: ' + str(block_index))
-    #     if block_index == 0:
-    #         continue
-    #     elif blockchain[block_index][0] == blockchain[block_index-1]:  #this is a nested array, so it's building "deeper" rather than linearly
-    #         is_valid = True
-    #     else: 
-    #         is_valid = False
-    #         break
-    # return is_valid 
+def verify_transactions():
+    is_valid = True
+    for tx in open_transactions:
+        if verify_transaction(tx):
+            is_valid = True
+        else:
+            is_valid = False
+    return is_valid
         
+
+
+
 
 
 waiting_for_input = True
@@ -160,6 +157,7 @@ while waiting_for_input:
     print('2: Mine a block')
     print('3: Output the blockchain blocks')
     print('4: Output Participants')
+    print('5: Check transaction validity')
     print('h: manipulate the blockchain')
     print('select q to Quit!')
     user_choice = get_user_choice()
@@ -178,6 +176,11 @@ while waiting_for_input:
         print_blockchain_element()
     elif user_choice == '4':
         print(participants)
+    elif user_choice == '5':
+        if verify_transactions():
+            print('All transactions are valid')
+        else:
+            print('There are invalid transactions')
     elif user_choice == 'h':
         if len(blockchain) >= 1:
             blockchain[0] = {
